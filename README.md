@@ -67,10 +67,10 @@ rm rstudio-2021.09.0+351-amd64.deb
 [0. Apresentações](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/00_slides_r_data_analysis.html) <br>
 [1. Introdução à linguagem R](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/01_slides_r_data_analysis.html) <br>
 [2. Introdução ao tidyverse](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/02_slides_r_data_analysis.html) <br>
-[3. Visualização de dados](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/03_slides_r_data_analysis.html)
+[3. Visualização de dados](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/03_slides_r_data_analysis.html) <br>
 [4. Introdução à linguagem R](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/04_slides_r_data_analysis.html) <br>
 [5. Introdução ao tidyverse](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/05_slides_r_data_analysis.html) <br>
-[6. Visualização de dados](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/06_slides_r_data_analysis.html)
+[6. Visualização de dados](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/06_slides_r_data_analysis.html) <br>
 [7. Visualização de dados](https://mauriciovancine.github.io/workshop-r-data-analysis/01_slides/07_slides_r_data_analysis.html)
 
 ---
@@ -80,7 +80,7 @@ rm rstudio-2021.09.0+351-amd64.deb
 [0. Instalar pacotes](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/00_script_r_data_analysis.R) <br>
 [1. Introdução ao tidyverse](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/01_script_r_data_analysis.R) <br>
 [2. Introdução ao tidyverse](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/02_script_r_data_analysis.R) <br>
-[3. Visualização de dados](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/03_script_r_data_analysis.R)
+[3. Visualização de dados](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/03_script_r_data_analysis.R) <br>
 [5. Introdução ao tidyverse](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/05_script_r_data_analysis.R) <br>
 [6. Introdução ao tidyverse](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/06_script_r_data_analysis.R) <br>
 [7. Visualização de dados](https://github.com/mauriciovancine/workshop-r-data-analysis/02_scripts/07_script_r_data_analysis.R)
