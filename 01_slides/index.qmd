@@ -1,0 +1,2276 @@
+---
+title: "Introdução à Modelos Estatísticos no R"
+subtitle: "Análise de dados univariados <br> Teste t"
+date: "2023-05-15"
+date-format: long
+author: "[Maurício Vancine](https://mauriciovancine.github.io/)"
+format: 
+  revealjs:
+    theme: [custom.scss]
+    slide-number: c/t
+    show-slide-number: all
+    hash-type: number
+    preview-links: false
+    chalkboard: true
+    logo: "img/logo.png"
+    execute:
+      echo: true
+      eval: true
+      warning: false
+      message: false
+editor: visual
+lang: pt
+---
+
+## Maurício Vancine
+
+::: columns
+::: {.column width="40%"}
+<center><br> ![](img/avatar.png) [`r icons::icon_style(icons::fontawesome("link"), fill = "#2268bc")`](https://mauriciovancine.github.io/) [`r icons::icon_style(icons::fontawesome("envelope", style = "solid"), fill = "#2268bc")`](mailto:mauricio.vancine@gmail.com) [`r icons::icon_style(icons::academicons("cv"), fill = "#2268bc")`](https://mauriciovancine.github.io/cv/cv-mauricio-vancine-pt-academic-complete.html) [`r icons::icon_style(icons::fontawesome("twitter"), fill = "#2268bc")`](https://twitter.com/mauriciovancine) [`r icons::icon_style(icons::fontawesome("github"), fill = "#2268bc")`](https://github.com/mauriciovancine) [`r icons::icon_style(icons::academicons("orcid"), fill = "#2268bc")`](https://orcid.org/0000-0001-9650-7575) [`r icons::icon_style(icons::academicons("lattes"), fill = "#2268bc")`](http://lattes.cnpq.br/9761288418931193)</center>
+:::
+
+::: {.column width="60%"}
+-   Ecólogo (2014)
+
+-   Doutorando em Ecologia (2020-2024)
+
+-   Ecologia Espacial
+
+-   Modelagem Ecológica
+
+-   Análise de Dados Geoespaciais
+
+-   Ecologia e Conservação de Anfíbios
+
+-   *Open source* \[R, QGIS, GRASS GIS, GNU/Linux, ...\]
+:::
+:::
+
+## Análises Ecológicas no R (2022)
+
+::: columns
+::: {.column width="40%"}
+<center><img src="img/aer.jpeg" href="https://analises-ecologicas.com/" style="width:90%"/></center>
+:::
+
+::: {.column width="60%"}
+-   15 capítulos: perguntas em ecologia, linguagem R, tidyverse, análises univariadas, multivariadas e geoespaciais
+
+-   [bookdown](https://analises-ecologicas.com/)
+
+-   [PDF](https://canal6.com.br/livreacesso/livro/analises-ecologicas-no-r/)
+
+-   [Amazon](https://www.amazon.com.br/An%C3%A1lises-ecol%C3%B3gicas-Ferdo-Rodrigues-Silva/dp/857917564X/ref=sr_1_1?keywords=9788579175640&qid=1654379366&sr=8-1)
+
+-   [Código Fonte](https://github.com/paternogbc/livro_aer)
+
+-   [YouTube](https://www.youtube.com/channel/UCLSVSCnmvf2k6OoWZCnEO4w)
+:::
+:::
+
+::: footer
+[Da Silva et al. (2022)](https://analises-ecologicas.com/)
+:::
+
+## Conteúdo
+
+<br><br><br>
+
+Tempo: 2 horas
+
+1.  Linguagem R (30 min.)
+2.  Análise exploratória de dados (30 min.)
+3.  Análise de dados multivariados (60 min.)
+
+## IMPORTANTE!!!
+
+**Estamos num espaço seguro e amigável**
+
+Sintam-se à vontade para me interromper e tirar dúvidas
+
+<center><img src="img/general_starwars_teamwork.png" style="width:50%"/></center>
+
+::: footer
+[\@allison_horst](https://twitter.com/allison_horst)
+:::
+
+# 1. Linguagem R
+
+## Definição
+
+O R é uma **linguagem de programação livre** (*open source*), direcionada à **manipulação, análise e visualização de dados**, com diversas **expansões** (*pacotes*) para **dados** ou **análises** específicas
+
+<center><img src="img/r_logo.svg" style="width:40%"/></center>
+
+::: footer
+[R](https://www.r-project.org/)
+:::
+
+## Histórico - Linguagem S {.smaller}
+
+**John M. Chambers (Stanford University, CA, EUA)**
+
+<br>
+
+**Versões**
+
+-   Old S (1976-1987)
+-   New S (1988-1997)
+-   S4 (1998)
+
+**IDE (*Integrated Development Environment*)**
+
+-   Interface: S-PLUS (1988-2008)
+
+![](img/person_john_chambers.jpg){.absolute width="400" height="400" right="10" top="200"}
+
+::: footer
+[Wickham (2013)](http://vita.had.co.nz/papers/r-s.pdf)
+:::
+
+## Histórico - Linguagem R {.smaller}
+
+**Robert Gentleman e Ross Ihaka (Auckland University, NZ)**
+
+<br>
+
+**Versões**
+
+-   Desenvolvimento (1993-2000)
+-   Versão 1 (2000-2004)
+-   Versão 2 (2004-2013)
+-   Versão 3 (2013-2020)
+-   Versão 4 (2020-atual)
+
+**IDE (*Integrated Development Environment*)**
+
+-   Interface: RStudio (2011-atual)
+-   Atualmente: **R Core Team**
+
+![](img/person_gentleman_ihaka.jpg){.absolute width="550" height="400" right="-50" top="200"}
+
+::: footer
+[Wickham (2013)](http://vita.had.co.nz/papers/r-s.pdf)
+:::
+
+## Histórico - Linguagem R {.smaller}
+
+::: columns
+::: {.column width="50%"}
+::: nonincremental
+<center><img src="img/r_history.png" style="width:75%"/></center>
+:::
+:::
+
+::: {.column width="50%"}
+::: nonincremental
+<center><img src="img/r_history_plot.png" style="width:100%"/></center>
+:::
+:::
+:::
+
+::: footer
+[Giorgi et al. (2022)](https://doi.org/10.3390/life12050648)
+:::
+
+## Aplicações {.smaller}
+
+**Manipulação, visualização e análise de dados**
+
+-   Estatísticas univariadas e multivariadas
+-   Análises de dados ecológicos
+-   Análise de dados espaciais, temporais e sonoros
+-   Análise de dados funcionais, genéticos e filogenéticos
+-   Análise de dados geoespaciais e sensoriamento remoto
+-   Visualização de todos os tipos de dados anteriores
+
+**R Markdown e quarto**
+
+-   Textos em HTML, PDF, Word, ODT, Markdown
+-   Slides, Websites, Blogs, Livros e Artigos
+-   Shiny
+
+![](img/r_markdown_output_formats.png){.absolute width="400" height="400" right="-100" top="150"} ![](img/quarto.png){.absolute width="400" height="100" right="-100" top="570"}
+
+::: footer
+[R Markdown](https://rmarkdown.rstudio.com/), [shiny](https://shiny.rstudio.com/), [quarto](https://quarto.org/)
+:::
+
+## IDE
+
+Ambiente de Desenvolvimento Integrado (*Integrated Development Environment*)
+
+<br><br>
+
+<center><img src="img/rstudio_logo.svg" style="width:80%"/></center>
+
+::: footer
+[RStudio](https://posit.co/downloads/)
+:::
+
+## IDE
+
+Ambiente de Desenvolvimento Integrado (*Integrated Development Environment*)
+
+![](img/r_rstudio01.png){.absolute width="700" height="180" right="180" top="200"} ![](img/r_rstudio02.png){.absolute width="700" height="280" right="180" top="370"}
+
+::: footer
+[Ismay & Kim (2020)](https://posit.co/downloads/)
+:::
+
+## Interface
+
+<center><img src="img/rstudio.png" style="width:100%"/></center>
+
+::: footer
+[RStudio](https://www.rstudio.com/)
+:::
+
+## Projeto R (.Rproj)
+
+-   Facilita o trabalho em múltiplos ambientes
+-   Cada projeto possui seu diretório, documentos e workspace
+-   Permite controle de versão (git e GitHub)
+
+<br>
+
+<center><img src="img/rstudio_project_logo.png" style="width:25%"/></center>
+
+::: footer
+[RStudio](https://www.rstudio.com/)
+:::
+
+# Antes de começarmos...
+
+## Conferindo os computadores
+
+<center><img src="img/general_hard_soft_bg.png" style="width:80%"/></center>
+
+::: footer
+[Café com Código](https://www.instagram.com/cafecomcodigo/?hl=pt)
+:::
+
+# 
+
+<center><img src="img/code.png" style="width:45%"/></center>
+
+## Console
+
+O console é onde a linguagem R instalada é carregada para executar os códigos
+
+<center><img src="img/rstudio_script.png" style="width:55%"/></center>
+
+::: footer
+[RStudio](https://www.rstudio.com/)
+:::
+
+## Console
+
+-   Na janela do console aparece o símbolo `>`, seguido de uma barra vertical `|` que fica piscando (cursor), onde digitamos ou enviamos nossos códigos do script
+
+-   Vamos digitar `10 + 2` e apertar a tecla `Enter` para que essa operação seja executada
+
+-   O resultado retorna o valor `12`, precedido do valor `1` entre colchetes `[1]`
+
+```{r}
+10 + 2
+```
+
+## Console
+
+-   Os colchetes `[]` demonstram a posição do elemento numa sequência de valores
+
+-   Vamos criar uma sequência usando o operador `:` para demonstrar isso
+
+-   O número que aparecer nos colchetes vai depender da largura das janelas
+
+```{r}
+1:42
+```
+
+## Console {.smaller}
+
+**Noções de programação**
+
+Número inteiro (*integer*)
+
+```{r}
+1
+```
+
+. . .
+
+Número decimal (*float* ou *double*)
+
+```{r}
+1.2
+```
+
+. . .
+
+Texto entre aspas simples (`''`) ou duplas (`""`) (*character* ou *string*)
+
+```{r}
+"Este é o número 1"
+```
+
+. . .
+
+Lógico (letras maiúsculas) (*booleano*)
+
+```{r}
+TRUE
+FALSE
+```
+
+## Script
+
+Onde os códigos são escritos e salvos no formato .R
+
+-   Atalho: `ctrl + shift + N`
+
+<center><img src="img/rstudio_script.jpg" style="width:80%"/></center>
+
+## Script
+
+-   Os códigos devem ser digitados preferencialmente no script
+
+-   Para executar um código, deixem o cursor em qualquer lugar da linha
+
+-   Atalho: `ctrl + enter`
+
+```{r}
+1
+```
+
+<br>
+
+```{r}
+1 + 2
+```
+
+## Script
+
+**Salvar um script**
+
+-   Atalho: `ctrl + S`
+
+<center><img src="img/rstudio_script.png" style="width:50%"/></center>
+
+## Script
+
+**Comentários (#)**
+
+-   Comentários não são lidos pelo R e descrevem informações em nosso script
+
+-   São representados pelo `#` (hash) ou `#'` (hash-linha)
+
+```{r}
+# comentarios
+# o r nao le o codigo depois do # (hash)
+
+42 # essas palavras nao sao executadas, apenas o 42
+```
+
+## Script
+
+**Comentários (#)**
+
+-   Sempre comece um script com um cabeçalho
+
+-   Ajuda a lembrar o que o script faz e quando foi escrito
+
+```{r}
+#' ----
+#' título: modelos estatisticos em ecologia
+#' autor: seu nome
+#' data: 2023-04-26
+#' ----
+```
+
+# 
+
+<center><img src="img/general_comment_gandalf.jpg" style="width:50%"/></center>
+
+## Operadores
+
+**Operadores aritméticos (retorna números)**
+
+| Operador |      Descrição       |   Uso   |
+|:--------:|:--------------------:|:-------:|
+|    \+    |        Adição        |  a + b  |
+|    --    |      Subtração       |  a - b  |
+|    \*    |    Multiplicação     | a \* b  |
+|    /     |       Divisão        |  a / b  |
+|    %%    |   Resto da divisão   | a %% b  |
+|   %/%    | Quociente da divisão | a %/% b |
+|    \^    |     Potenciação      |  a\^b   |
+
+## Operadores
+
+**Operadores relacionais (retorna TRUE\|FALSE)**
+
+| Operador |       Descrição       |   Uso    |
+|:--------:|:---------------------:|:--------:|
+|    \<    |         Menor         |  a \< b  |
+|    \>    |         Maior         |  a \> b  |
+|   \<=    |    Menor ou igual     | a \<= b  |
+|   \>=    |    Maior ou igual     | a \> = b |
+|    ==    |         Igual         |  a == b  |
+|    !=    | Não igual (diferente) |   a!=b   |
+
+## Operadores
+
+**Ordem das operações aritméticas**
+
+<br>
+
+`()` \> `^` \> `*` ou `/` \> `+` ou `-`
+
+<br>
+
+```{r}
+# sem especificar - segue a ordem das operações
+1 * 2 + 2 / 2 ^ 2
+```
+
+<br>
+
+```{r}
+# especificando - segue a ordem dos parênteses
+((1 * 2) + (2 / 2)) ^ 2
+```
+
+## Objetos
+
+Palavras que atribuímos (guardamos) dados possibilitando sua manipulação
+
+-   Atribuição (`<-`)
+
+-   palavra \<- dados
+
+-   Atalho: `alt + -`
+
+![](img/general_assign.jpg){.absolute width="380" height="480" right="50" top="200"}
+
+## Objetos
+
+Vamos atribuir o valor `10` à palavra `eco`
+
+```{r}
+# atribuicao - simbolo (<-)
+eco <- 10 
+```
+
+# 
+
+<center><img src="img/gif_where.gif" style="width:100%"/></center>
+
+## Objetos
+
+-   Sempre confira a atribuição
+
+-   **Dica**: chame o objeto novamente
+
+```{r}
+# atribuicao - simbolo (<-)
+eco <- 10 
+eco
+```
+
+## Objetos
+
+**Seja criativo**
+
+O R sobrescreve os valores dos objetos com o mesmo nome
+
+```{r}
+# eco vale 10
+eco <- 10 
+eco
+```
+
+<br>
+
+```{r}
+# agora eco vale 2
+eco <- 2 
+eco
+```
+
+## Objetos {.smaller}
+
+**Seja criativo, mas nem tanto...**
+
+O R tem limitações ao nomear objetos!
+
+1.  Começar por letras (`a-z` ou `A-Z`) ou pontos (`.`)
+
+2.  Conter letras (`a-z` ou `A-Z`), números (`0-9`), underscores (`_`) ou pontos (`.`)
+
+3.  *Case-sensitive*, i.e., ele difere letras maiúsculas de minúsculas
+
+4.  Evitar utilizar letras maiúsculas, acentos ou cedilha (`ç`)
+
+5.  Não podem ser iguais a nomes especiais: `break, else, FALSE, for, function, if, Inf, NA, NaN, next, repeat, return, TRUE, while`
+
+```{r error=TRUE}
+for <- 1
+```
+
+## Objetos
+
+**Ambiente (*Environment*)**
+
+Os objetos podem ser visualizados no painel *Environment*
+
+<center><img src="img/rstudio_script.png" style="width:50%"/></center>
+
+## Objetos
+
+Podemos utilizar objetos para fazer operações
+
+```{r}
+# definir dois objetos
+eco1 <- 10
+eco2 <- 2
+```
+
+. . .
+
+<br>
+
+```{r}
+# operacoes com objetos
+eco1 + eco2 # adicao
+eco1 - eco2 # subtracao
+eco1 * eco2 # multiplicacao
+eco1 / eco2 # divisao
+```
+
+## Objetos
+
+Podemos utilizar objetos para atribuir resultados de operações
+
+```{r}
+# operacoes com objetos e atribuicao
+adi <- eco1 + eco2 # adicao
+adi
+
+sub <- eco1 - eco2 # subtracao
+sub
+
+mul <- eco1 * eco2 # multiplicacao
+mul
+
+div <- eco1 / eco2 # divisao
+div
+```
+
+## Objetos
+
+**Tipos de objetos**
+
+<center><img src="img/r_data_structures_general.png" style="width:70%"/></center>
+
+## Funções {.smaller}
+
+Códigos que realizam operações em argumentos
+
+-   Estrutura de uma função:
+
+`nome_da_funcao(argumento1, argumento2)`
+
+<br>
+
+1.  **Nome da função**: remete ao que ela faz (inglês)
+2.  **Parênteses**: limitam a função
+3.  **Argumentos**: onde a função atuará
+4.  **Vírgulas**: separam os argumentos
+
+![](img/code_function_annotated.png){.absolute width="600" height="300" right="-100" top="350"}
+
+------------------------------------------------------------------------
+
+## Funções
+
+**Exemplos**
+
+```{r}
+# soma
+sum(10, 2)
+
+# soma de objetos
+sum(eco1, eco2)
+
+# soma de objetos atribuidos a objetos
+eco_sum <- sum(eco1, eco2)
+eco_sum
+```
+
+## Funções
+
+**Argumentos**
+
+Os argumentos podem ser de dois tipos:
+
+1.  **Objetos ou valores**: dados onde a função irá atuar
+
+2.  **Parâmetros**: mudam o comportamento da função (texto = `TRUE`, `FALSE` ou `"texto"`)
+
+```{r}
+sum(1, 2, 3, NA)
+sum(1, 2, 3, NA, na.rm = TRUE)
+```
+
+## Funções
+
+**Argumentos como valores**
+
+```{r}
+# funcoes - argumentos como valores
+sum(10, 2)
+prod(10, 2)
+```
+
+. . .
+
+**Argumentos como objetos**
+
+```{r}
+# funcoes - argumentos como objetos
+sum(eco1, eco2)
+prod(eco1, eco2)
+```
+
+## Funções
+
+**Argumentos como parâmetros**
+
+```{r}
+# repeticao - vezes
+rep(x = 1:5, times = 5)
+```
+
+<br>
+
+. . .
+
+```{r}
+# repeticao - cada
+rep(x = 1:5, each = 5)
+```
+
+## Funções
+
+**Atribuição de resultados a objetos**
+
+```{r}
+# atribuicao dos resultados
+rep_times <- rep(x = 1:5, times = 5)
+rep_times
+```
+
+<br>
+
+. . .
+
+```{r}
+rep_each <- rep(x = 1:5, each = 5)
+rep_each
+```
+
+## Funções
+
+**Atribuição, função e linha temporal**
+
+Criar dois objetos
+
+```{r}
+# criar dois objetos
+foo <- 2
+bar <- 3
+```
+
+Somar esses objetos e atribuição
+
+```{r}
+# somar e atribuir
+su <- sum(foo, bar)
+su
+```
+
+Raiz quadrada e atribuição
+
+```{r}
+# raiz e atribuir
+sq <- sqrt(su)
+sq
+```
+
+## Funções
+
+**Atribuição, função e linha temporal**
+
+1.  Atribuição de dados a objetos
+
+2.  Funções que operam e mudam esses dados
+
+3.  Nova atribuição desses resultados a novos objetos
+
+```{r}
+# criar dois objetos
+foo <- 2
+bar <- 3
+
+# somar e atribuir
+su <- sum(foo, bar)
+
+# raiz e atribuir
+sq <- sqrt(su)
+```
+
+## Ajuda {.smaller}
+
+Descreve as informações de uma função
+
+```{r eval=FALSE}
+# descreve as informacoes de uma funcao
+help("mean") # arquivo .html
+?mean
+```
+
+::: columns
+::: {.column width="50%"}
+![](img/r_help.png){.absolute width="450" height="450" right="600" top="220"}
+:::
+
+::: {.column width="50%"}
+<br> **Description**: descrição da função\
+**Usage**: uso da função e argumentos\
+**Arguments**: argumentos e suas especificações\
+**Details**: detalhes da função\
+**Value**: interpretar a saída (*output*)\
+**Note**: notas sobre a função\
+**Authors**: autores da função\
+**References**: referências bibliográficas da função\
+**See also**: funções relacionadas\
+**Examples**: exemplos do uso da função
+:::
+:::
+
+## Pacotes
+
+Conjunto de funções extras para executar tarefas específicas
+
+<center><img src="img/r_packages.svg" style="width:70%"/></center>
+
+## Pacotes
+
+Duas fontes
+
+-   CRAN (*Comprehensive R Archive Network*)
+-   GitHub (Repositório de códigos)
+
+```{r eval=FALSE}
+# numero de pacotes no cran
+nrow(available.packages())
+```
+
+<center><img src="img/r_number_packages.png" style="width:35%"/></center>
+
+::: footer
+[CRAN](https://cran.r-project.org/), [Scraping CRAN with rvest](https://www.r-bloggers.com/2017/03/scraping-cran-with-rvest/)
+:::
+
+## Pacotes {.smaller}
+
+**Instalação de pacotes**
+
+1.  Download do pacote para o computador (como instalar um software/APP)
+2.  Precisa estar conectado à internet
+3.  O nome do pacote precisa estar entre aspas
+4.  Função (CRAN): `install.packages("pacote")`
+
+**Instalar o pacote vegan**
+
+```{r eval=FALSE}
+# instalar pacotes
+install.packages("vegan")
+```
+
+**Verificar pacotes instalados**
+
+```{r eval=FALSE}
+# verificar pacotes instalados
+library()
+```
+
+## Pacotes {.smaller}
+
+**Carregamento de pacotes**
+
+1.  Carregar o pacote para o R (como abrir software/APP)
+2.  Carrega-se toda vez que se abre o R
+3.  Não precisa estar conectado à internet
+4.  O nome do pacote não precisa estar entre aspas
+5.  Funções: `library(pacote)` ou `require(pacote)`
+
+**Carregar o pacote vegan**
+
+```{r}
+# carregar pacotes
+library(vegan)
+```
+
+**Verificar pacotes carregados**
+
+```{r}
+# verificar pacotes carregados
+search()
+```
+
+# Principais erros
+
+# Se seu script rodou sem erros, tem algo errado...
+
+# 
+
+<center><img src="img/general_make_impossible.png" style="width:60%"/></center>
+
+# 
+
+<center><img src="img/gif_bugcat_error.gif" style="width:70%"/></center>
+
+# 
+
+<center><img src="img/gif_bugcat_sad.gif" style="width:70%"/></center>
+
+# 
+
+Help me help you: um bestiário para entender erros e pedir ajuda no R
+
+<center><img src="img/debugging.png" style="width:40%"/></center>
+
+::: footer
+[Help me help you: um bestiário para entender erros e pedir ajuda no R](https://anotherecoblog.wordpress.com/2020/08/26/help-me-help-you-um-bestiario-para-entender-erros-e-pedir-ajuda-no-r/)
+:::
+
+## Principais erros
+
+**1. Esquecer de completar um código (+)**
+
+Parênteses
+
+```{r error=TRUE}
+sum(1, 2
+    +
+```
+
+````         
+    Aspas
+    
+    ```{r error=TRUE}
+"string
++
+```
+````
+
+## Principais erros
+
+**2. Esquecer da vírgula**
+
+```{r error=TRUE}
+sum(1 2)
+```
+
+<br>
+
+**3. Chamar um objeto errado**
+
+```{r error=TRUE}
+obj <- 10
+OBJ
+```
+
+## Principais erros
+
+**4. Esquecer de carregar um pacote**
+
+```{r echo=FALSE}
+detach("package:vegan", unload = TRUE)
+```
+
+```{r error=TRUE}
+# carregar dados
+data(dune)
+
+# funcao do pacote vegan
+decostand(dune, "hell")
+```
+
+## Principais erros
+
+**4. Esquecer de carregar um pacote**
+
+```{r}
+# carregar o pacote
+library(vegan)
+
+## carregar dados
+data(dune)
+
+## funcao do pacote vegan
+decostand(dune, "hell")
+```
+
+## Principais erros
+
+**5. Usar o nome da função de forma errônea**
+
+```{r error=TRUE}
+colsums(dune)
+```
+
+<br>
+
+```{r error=TRUE}
+colSums(dune)
+```
+
+# Dúvidas?
+
+# 2. Análise exploratória de dados (AED)
+
+## Dados
+
+|    id     |       especie       | peso  | comp_corpo | comp_asa | ... |
+|:---------:|:-------------------:|:-----:|:----------:|:--------:|:---:|
+| LECAVE035 | Columbina talpacoti | 40.64 |   158.5    |  90.51   | ... |
+| LECAVE036 | Columbina talpacoti | 41.05 |   149.73   |  89.42   | ... |
+| LECAVE037 | Columbina talpacoti | 43.96 |   147.62   |  89.32   | ... |
+| LECAVE038 | Columbina talpacoti | 48.01 |   153.44   |  90.57   | ... |
+|    ...    |         ...         |  ...  |    ...     |   ...    | ... |
+
+## Variáveis
+
+Cada coluna dos nossos dados é uma **variável** (valores variam)
+
+```{r echo=FALSE}
+tibble::glimpse(readxl::read_excel("../Dados_morfo_modelos_Ana_23.xlsx", 
+                                   col_types = c("text", "text", rep("numeric", 5), "text")))
+```
+
+## Medidas-resumo
+
+**Medidas de posição**
+
+<br>
+
+-   **Moda**: valor mais frequente das observações
+
+-   **Mediana**: valor que divide as observações ordenadas em duas partes iguais
+
+-   **Média aritmética**: soma das observações dividida pelo número de observações
+
+-   **Outras médias**: ponderada, geométrica e harmônica
+
+## Medidas-resumo
+
+**Medidas de dispersão**
+
+<br>
+
+-   **Variância**: medida de quantas observações diferem do valor central (média)
+
+-   **Desvio padrão**: raiz quadrada da variância (mantêm a mesma unidade de medida)
+
+-   **Erro padrão**: variação da média amostral em relação à média populacional (confiabilidade da média amostral)
+
+## Tabelas {.smaller}
+
+**Tabelas de frequência**
+
+-   **Dados brutos**: conjunto dos valores numéricos coletados na pesquisa
+
+-   **Classes**: intervalo de valores contínuos (0 \|--- 1)
+
+-   **Frequência absoluta (fi)**: número de vezes que uma observação aparece ou pertencente a um intervalo ou classe
+
+-   **Frequência total**: soma de todas as frequências absolutas (fi)
+
+-   **Frequência relativa (fri)**: valor da razão de cada frequência absoluta (fi) com a frequência total (somatório de fi)
+
+-   **Frequência acumulada (Fi)**: obtida somando (acumulando) os valores da frequência absoluta (fi)
+
+-   **Frequência relativa acumulada (Fri)**: obtida somando (acumulando) os valores da frequência relativa (fri)
+
+## Tabelas
+
+**Tabelas de frequência**
+
+| Classes | Freq. absoluta (fi) | Freq. relativa (fri) | Freq. acumulada (Fi) | Freq. relativa acumulada (Fri) |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| 0\|---1 |          4          |         0.13         |          4           |              0.13              |
+| 1\|---2 |          8          |         0.26         |          12          |              0.39              |
+| 2\|---3 |         12          |         0.39         |          24          |              0.77              |
+| 3\|---4 |          7          |         0.23         |          31          |              1.00              |
+|  Total  |         31          |         1.00         |                      |                                |
+
+## Gráficos
+
+-   Melhor forma de apresentar, sintetizar, discutir e interpretar seus dados
+
+-   Necessário em quase todas as análises estatísticas
+
+-   Necessário em quase todas as publicações, trabalhos de consultoria, TCC, dissertação, tese, etc.
+
+-   Existem vários tipos de gráficos para representar os padrões em seus dados para diferentes tipos de finalidades
+
+-   De forma simplificada, os gráficos são representações dos nossos dados tabulares
+
+## Como mentir com estatística?
+
+![](img/cover_mentir_estatistica.jpg){.absolute width="270" height="400" right="850" top="200"} ![](img/como_mentir_est.png){.absolute width="900" height="450" right="-80" top="150"}
+
+::: footer
+[Heff (2016)](https://www.intrinseca.com.br/livro/624/), [Como MENTIR com ESTATÍSTICA](https://youtu.be/r6d-RBDlc5I)
+:::
+
+## Elementos de um gráfico
+
+Representações das colunas (eixos) e linhas (elementos)
+
+<center><img src="img/plot_data_table_scatterplot.png" style="width:90%"/></center>
+
+## Tipos de variáveis
+
+![](img/plot_variables.png){.absolute width="500" height="250" right="300" top="100"}
+
+![](img/nominal_ordinal_binary.png){.absolute width="500" height="350" right="550" top="350"}
+
+![](img/continuous_discrete_inv.png){.absolute width="500" height="350" right="50" top="350"}
+
+::: footer
+[Matthiopoulos (2011)](http://greenmaths.st-andrews.ac.uk/), [\@allison_horst](https://twitter.com/allison_horst)
+:::
+
+## Tipos de variáveis e tipos gráficos
+
+<br>
+
+<center><img src="img/ggplot_data_from_viz.png" style="width:85%"/></center>
+
+::: footer
+[from Data to Viz](https://www.data-to-viz.com/)
+:::
+
+## Tipos de variáveis e tipos gráficos
+
+<center><img src="img/r_charts_suggests.png" style="width:100%"/></center>
+
+## R CHARTS
+
+<center><img src="img/rcharts-featured.png" style="width:100%"/></center>
+
+::: footer
+[R CHARTS](https://r-charts.com/)
+:::
+
+## Histograma ou densidade
+
+-   Representa dados de uma coluna
+
+-   Dados do tipo discreto ou contínuo
+
+-   Distribuição de frequência ou densidade
+
+![](img/plot_histogram.png){.absolute width="350" height="350" right="550" top="310"}
+
+![](img/plot_density.png){.absolute width="350" height="350" right="100" top="310"}
+
+::: footer
+[histogram](https://www.data-to-viz.com/graph/histogram.html), [density](https://www.data-to-viz.com/graph/density.html)
+:::
+
+## Histograma
+
+<br>
+
+<center><img src="img/hist_fig1.gif" style="width:80%"/></center>
+
+. . .
+
+<br>
+
+<center><img src="img/hist_fig2.gif" style="width:80%"/></center>
+
+::: footer
+[Intro to Histograms](https://plotly.com/chart-studio-help/histogram/)
+:::
+
+## Histograma
+
+<center><img src="img/hist_fig3.gif" style="width:55%"/></center>
+
+::: footer
+[Intro to Histograms](https://plotly.com/chart-studio-help/histogram/)
+:::
+
+## Densidade
+
+<br><br>
+
+<center><img src="img/hist_fig5.jpg" style="width:100%"/></center>
+
+::: footer
+[Intro to Histograms](https://plotly.com/chart-studio-help/histogram/)
+:::
+
+## Densidade
+
+![](img/hist_fig6.gif){.absolute width="550" height="350" right="550" top="250"}
+
+. . .
+
+![](img/hist_fig7.gif){.absolute width="560" height="340" right="-50" top="265"}
+
+::: footer
+[Intro to Histograms](https://plotly.com/chart-studio-help/histogram/)
+:::
+
+## Gráfico de caixas (*Box plot*)
+
+-   Representa dados de duas colunas
+
+-   Dados do tipo categóricos: X = categórico e Y = contínuo
+
+-   Resume informações de medidas contínuas para dois ou mais fatores categóricos
+
+![](img/plot_boxplot.png){.absolute width="350" height="350" right="360" top="330"}
+
+::: footer
+[boxplot](https://www.data-to-viz.com/caveat/boxplot.html)
+:::
+
+## Gráfico de caixas (*Box plot*)
+
+-   Intervalo inter-quartil (*interquartile range* - IQR)
+
+-   Limite inferior e limite superipor (1.5 x IQR)
+
+-   Valores exteriores (*outliers*)
+
+![](img/plot_boxplot1.png){.absolute width="500" height="280" right="520" top="350"} ![](img/plot_boxplot2.png){.absolute width="430" height="430" right="50" top="250"}
+
+::: footer
+[Understanding Boxplots](https://www.kdnuggets.com/2019/11/understanding-boxplots.html)
+:::
+
+## Outlier
+
+Observação coletado de forma errônea ou devido à arredondamentos
+
+<center><img src="img/outlier.png" style="width:85%"/></center>
+
+## Gráfico de caixas (*Box plot*)
+
+<br>
+
+<center><img src="img/boxplotfig1.gif" style="width:80%"/></center>
+
+. . .
+
+<center><img src="img/boxplotfig2.gif" style="width:80%"/></center>
+
+::: footer
+[Intro to Box Plots](https://plotly.com/chart-studio-help/what-is-a-box-plot/)
+:::
+
+## Gráfico de caixas (*Box plot*)
+
+<br>
+
+<center><img src="img/boxplotfig3.gif" style="width:80%"/></center>
+
+. . .
+
+<center><img src="img/boxplotfig4.gif" style="width:80%"/></center>
+
+::: footer
+[Intro to Box Plots](https://plotly.com/chart-studio-help/what-is-a-box-plot/)
+:::
+
+## Gráfico de caixas (*Box plot*)
+
+<br>
+
+<center><img src="img/boxplotfig5.gif" style="width:80%"/></center>
+
+. . .
+
+![](img/boxplotfig7.gif){.absolute width="1000" height="350" right="-190" top="340"}
+
+::: footer
+[Intro to Box Plots](https://plotly.com/chart-studio-help/what-is-a-box-plot/)
+:::
+
+## Gráfico de caixas (*Box plot*)
+
+<br>
+
+<center><img src="img/boxplotfig8.gif" style="width:60%"/></center>
+
+::: footer
+[Intro to Box Plots](https://plotly.com/chart-studio-help/what-is-a-box-plot/)
+:::
+
+## Gráfico de caixas (*Box plot*)
+
+<br>
+
+<center><img src="img/boxplotfig9.gif" style="width:80%"/></center>
+
+::: footer
+[Intro to Box Plots](https://plotly.com/chart-studio-help/what-is-a-box-plot/)
+:::
+
+# Dúvidas?
+
+# 3. Análise de dados univariados
+
+## Pergunta e hipótese {.smaller}
+
+::: columns
+::: {.column width="40%"}
+<center><img src="img/perguntas.png" style="width:100%"/></center>
+:::
+
+::: {.column width="60%"}
+<br>
+
+**Método hipotético-dedutivo**
+
+A. Teoria ecológica/biológica
+
+B. Desenho amostral (variáveis, unidade amostral, esforço, escala - temporal e espacial)
+
+C. Hipótese ecológica/biológica e predições
+
+D. Hipótese estatística - hipótese nula (H0) e hipótese alternativa (H1)
+
+E. Análise estatística - inferência (estatística ou estimador): p, R², F, t, z, r...
+
+F. Decisão: interpretação à luz da teoria ecológica/biológica
+:::
+:::
+
+## Hipótese ecológica e estatística
+
+<center><img src="img/fluxograma.png" style="width:80%"/></center>
+
+## População e amostra {.smaller}
+
+::: columns
+::: {.column width="50%"}
+<center><img src="img/inferencia.png" style="width:80%"/></center>
+:::
+
+::: {.column width="50%"}
+-   **População**: todos dados existentes
+
+-   **Amostra**: parte dos dados coletados
+
+-   **Amostragem**: processo de coleta de dados
+
+-   **Estatística descritiva**: análise descritiva dos dados coletados (medidas-resumo, tabela e gráficos)
+
+-   **Inferência estatística**: análise inferencial da amostra para afirmar algo sobre a população (testes estatísticos)
+
+-   **Parâmetros**: medidas sobre a população (média, variância, desvio padrão) (letras gregas)
+
+-   **Estatísticas (estimadores)**: medidas sobre a amostra (média, variância, desvio padrão, erro padrão) (letras romanas)
+:::
+:::
+
+## Parâmetro e estatística (estimador)
+
+<center><img src="img/populacao_amostra.png" style="width:50%"/></center>
+
+. . .
+
+<center><img src="img/populacao_amostra_parametros_estimadores.png" style="width:50%"/></center>
+
+::: footer
+[Como interpretar o intervalo de confiança?](https://fernandafperes.com.br/blog/intervalo-de-confianca/)
+:::
+
+## Média
+
+![](img/populacao_amostra_parametros_estimadores.png){.absolute width="450" height="300" right="-200" top="100"}
+
+Média da população (parâmetro)
+
+$$\mu=\sum \frac{x_{i}}{n}$$
+
+Média da amostra (estatística)
+
+$$\bar{x}=\sum \frac{x_{i}}{n}$$
+
+```{r}
+# media
+amostra <- c(3, 1, 3, 5, 6, 7)
+mean(amostra)
+```
+
+::: footer
+[Como interpretar o intervalo de confiança?](https://fernandafperes.com.br/blog/intervalo-de-confianca/)
+:::
+
+## Variância
+
+![](img/populacao_amostra_parametros_estimadores.png){.absolute width="450" height="300" right="-200" top="100"}
+
+Variância da população (parâmetro)
+
+$$\sigma^2=\sum \frac{(x_{i}-\bar{x})^2}{n}$$
+
+Variância da amostra (estatística)
+
+$$s^2=\sum \frac{(x_{i}-\bar{x})^2}{n}$$
+
+```{r}
+# variancia
+amostra <- c(3, 1, 3, 5, 6, 7)
+var(amostra)
+```
+
+::: footer
+[Como interpretar o intervalo de confiança?](https://fernandafperes.com.br/blog/intervalo-de-confianca/)
+:::
+
+## Desvio padrão
+
+![](img/populacao_amostra_parametros_estimadores.png){.absolute width="450" height="300" right="-200" top="100"}
+
+Desvio padrão da população (parâmetro)
+
+$$\sigma =\sqrt {\sum \frac{(x_{i}-\bar{x})^2}{n}}$$
+
+Desvio padrão da amostra (estatística)
+
+$$s =\sqrt {\sum \frac{(x_{i}-\bar{x})^2}{n}}$$
+
+```{r}
+# desvio padrao
+amostra <- c(3, 1, 3, 5, 6, 7)
+sd(amostra)
+```
+
+::: footer
+[Como interpretar o intervalo de confiança?](https://fernandafperes.com.br/blog/intervalo-de-confianca/)
+:::
+
+## Erro padrão
+
+-   Erro padrão da média amostral
+
+-   Variação da média amostral em relação à média populacional (confiabilidade da média amostral)
+
+![](img/erro_padrao.jpg){.absolute width="350" height="350" right="-200" top="100"}
+
+$$s_\bar{x} =\frac{s}{\sqrt{n}}$$
+
+```{r}
+# erro padrao da media
+amostra <- c(3, 1, 3, 5, 6, 7)
+sd(amostra)/sqrt(length(amostra))
+```
+
+## Inferência estatística
+
+Conclusões sobre características da população (parâmetros) através de estatísticas (estimadores) calculadas a partir da(s) amostra(s)
+
+<br>
+
+<center><img src="img/inferencia_bolo.png" style="width:100%"/></center>
+
+## Inferência estatística
+
+Duas categorias:
+
+1.  Estimação pontual com um intervo (intervalo de confiança)
+2.  Testes de hipóteses (testar afirmações)
+
+::: columns
+::: {.column width="50%"}
+<br>
+
+<center><img src="img/intervalo_confianca.png" style="width:100%"/></center>
+:::
+
+::: {.column width="50%"}
+<br>
+
+<center><img src="img/teste_hipotese.png" style="width:100%"/></center>
+:::
+:::
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Intervalo de confiância (IC)
+
+-   Intervalo de valores com alta probabilidade (**grau de confiança**) de conter o valor do parâmetro da população
+
+Intervalo de confiância = \[Estivativa pontual ± Erro da estimativa\]
+
+. . .
+
+-   **Grau de confiança**: probabilidade do intervalo de confiança conter o parâmetro populacional (1−α)
+
+-   **α**: probabilidade de erro ao se afirmar que o intervalo contém o valor do parâmetro
+
+-   Ex. A estimativa da média foi 2.5 ± 0.5 para um nível de significância de 5% (α = 0.05)
+
+## Intervalo de confiância (IC)
+
+**1. Variância σ² da população é <u>conhecida</u>**
+
+Erro segue a distribuição z normal padronizada (μ = 0 e σ² = 1)
+
+$$IC^{\mu}_{100(1 - \alpha)\%} = (\bar{x} - z_{\alpha/2}\times\frac{\sigma}{\sqrt{n}}; \bar{x} + z_{\alpha/2}\times\frac{\sigma}{\sqrt{n}}); z_{\alpha/2} = 1.96$$
+
+. . .
+
+Ex.: x=10 (amostra), n=100 (amostra), σ=2 (população), α=5%
+
+$$IC^{\mu}_{95} = (10 - 1.96\times\frac{2}{\sqrt{100}}; 10 + 1.96\times\frac{2}{\sqrt{100}})$$
+
+$$IC^{\mu}_{95} = [9.608; 10.392]$$
+
+## Distribuição z {.smaller}
+
+Distribuição de probabilidades de z, com média de z (μ = 0) e desvio padrão de z (σ² = 1)
+
+Como estimamos valores acima e abaixo da média populacional, e para um nível de significância de 5% (α = 0.05), dividimos (α/2 = 0.025) e (1 - α/2 = 0.975)
+
+<center><img src="img/distribuicao_z.png" style="width:60%"/></center>
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Intervalo de confiância (IC)
+
+**1. Variância σ² da população é <u>conhecida</u>**
+
+```{r}
+n <- 100
+n
+
+xbar <- 10
+xbar
+
+sigma <- 2
+sigma
+
+valor_critico <- qnorm(0.975, mean = 0, sd = 1, lower.tail = TRUE)
+valor_critico
+
+xbar - valor_critico * (sigma/sqrt(n))
+xbar + valor_critico * (sigma/sqrt(n))
+```
+
+## Intervalo de confiância (IC)
+
+**2. Variância σ² da população é <u>desconhecida</u>**
+
+Erro segue a distribuição t
+
+-   Variância amostral (s²)
+-   Graus de liberdade (n - 1), sendo n o número de observações
+
+$$IC^{\mu}_{100(1 - \alpha)\%} = (\bar{x} - t_{(n - 1, \alpha/2)}\times\frac{s}{\sqrt{n}}; \bar{x} + t_{(n - 1,\alpha/2)}\times\frac{s}{\sqrt{n}})$$
+
+$$s = \sqrt\frac{\sum_{i = 1}^n{(x_i - \bar{x})^2}}{n - 1}$$
+
+## Distribuição t
+
+Graus de liberdade (g.l.): quantidade de observações (n) menos a quantidade de parâmetros estimados (μ)
+
+<center><img src="img/distribuicao_t_04.png" style="width:60%"/></center>
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Intervalo de confiância (IC)
+
+**2. Variância σ² da população é <u>desconhecida</u>**
+
+Ex.: \[36.4, 35.7, 37.2, 36.5, 34.9, 35.2, 36.3, 35.8, 36.6, 36.9\]
+
+$$\bar{x} = \frac{\sum_{i=1}^n x_i}{n} = 36.15$$ $$s = \sqrt\frac{\sum_{i = 1}^n{(x_i - \bar{x})^2}}{n - 1} = \sqrt\frac{4.865}{9} = 0.7352$$ $$t_{(n−1,α/2)} = t_{(9,0.025)} = 2.26$$
+
+## Intervalo de confiância (IC)
+
+**2. Variância σ² da população é <u>desconhecida</u>**
+
+Ex.: \[36.4, 35.7, 37.2, 36.5, 34.9, 35.2, 36.3, 35.8, 36.6, 36.9\]
+
+$$IC^{\mu}_{95} = (36.15 - 2.26\times\frac{0.7352}{\sqrt{10}}; 36.15 + 2.26\times\frac{0.7352}{\sqrt{10}})$$
+
+$$IC^{\mu}_{95} = [35.625; 36.675]$$
+
+## Intervalo de confiância (IC) {.smaller}
+
+**2. Variância σ² da população é** <u>desconhecida</u>
+
+```{r}
+amostra <- c(36.4, 35.7, 37.2, 36.5, 34.9, 35.2, 36.3, 35.8, 36.6, 36.9)
+
+n <- length(amostra)
+n
+
+xbar <- mean(amostra)
+xbar
+
+s <- sd(amostra)
+s
+
+valor_critico <- qt(df = 9, p = 0.975)
+valor_critico
+
+xbar - valor_critico * (s/sqrt(n))
+xbar + valor_critico * (s/sqrt(n))
+```
+
+# Dúvidas?
+
+## Teste de hipóteses
+
+Regra de decisão para rejeitar (ou não) uma **afirmação (*hipótese*)** feita sobre um parâmetro populacional desconhecido, com base numa amostra aleatória
+
+. . .
+
+**Ex**:
+
+-   Testar se agroflorestas retêm mais caborno que a agricultura convencional
+-   Verificar se paisagens mais fragmentadas possuem menos espécies
+-   Testar se as pessoas gostam mais de Harry Potter ou Senhor dos Anéis
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Teste de hipóteses
+
+Regra de decisão para rejeitar (ou não) uma **afirmação (*hipótese*)** feita sobre um parâmetro populacional desconhecido, com base numa amostra aleatória
+
+<br>
+
+**Hipótese Nula (H0)**: hipótese a ser testada
+
+**Hipótese Alternativa (H1)**: hipótese a ser confrontada com H0
+
+-   Teste feito para concluir na rejeição (ou não) de H0
+-   Decisão é feita com base em informações de uma amostra, estaremos sujeitos a dois tipos de erros
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Teste de hipóteses {.smaller}
+
+**Erros**
+
+::: columns
+::: {.column width="50%"}
+::: nonincremental
+-   **Erro do tipo I**: rejeitar H0 quando H0 é verdadeira
+
+α = P(erro do tipo I) = P(rejeitar H0\|H0 é verdadeira)
+:::
+:::
+
+::: {.column width="50%"}
+::: nonincremental
+-   **Erro do tipo II**: não rejeitarmos H0 quando H0 é falsa
+
+β = P(erro do tipo II) = P(não rejeitar H0\|H0 é falsa)
+:::
+:::
+:::
+
+<center><img src="img/teste_hipoteses.png" style="width:80%"/></center>
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Teste de hipóteses
+
+**Etapas**
+
+1.  Definir as hipóteses nula (H0) e alternativa (H1)
+2.  Fixar o nível de significância (α) (e.g. α = 5% ou 0.05)
+3.  Determinar a estatística do teste (e.g. t)
+4.  Determinar a região crítica do teste (RC)
+5.  Calcular o valor da estatística do teste (amostra)
+6.  Se o valor calculado no passo 5 pertence à RC, rejeita-se H0, se não pertencer, não se rejeita H0
+7.  Conclusão do teste
+
+## Teste de hipóteses
+
+**Detalhamento**
+
+1 Definição das hipóteses
+
+::: columns
+::: {.column width="33%"}
+H0: µ = µ0 <br> H1: µ ≠ µ0
+:::
+
+::: {.column width="33%"}
+H0: µ = µ0 <br> H1: µ \< µ0
+:::
+
+::: {.column width="33%"}
+H0: µ = µ0 <br> H1: µ \> µ0
+:::
+:::
+
+2.  Fixar o nível de significância α (5% ou 0.05)
+
+3.  Definir a estatística de teste (t)
+
+$$t = \frac{\bar{x} - \mu}{s / \sqrt{n}} \sim t_{n - 1}$$
+
+## Teste de hipóteses
+
+**Detalhamento**
+
+4 Definir a região crítica (RC)
+
+::: columns
+::: {.column width="20%"}
+H0: µ = µ0 <br> H1: µ ≠ µ0 <br><br> H0: µ = µ0 <br> H1: µ \< µ0 <br><br> H0: µ = µ0 <br> H1: µ \> µ0
+:::
+
+::: {.column width="80%"}
+<center><img src="img/regiao_critica.png" style="width:100%"/></center>
+:::
+:::
+
+## Teste de hipóteses
+
+**Detalhamento**
+
+5.  Com base nos valores observados da amostra, calcular o valor da estatística do teste t
+
+$$t_c = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+6.  Se tc ∈ RC ⇒ rejeitar H0 (corrobora H1) <br> Se tc ∉ RC ⇒ não rejeitar H0 (não corrobora H1)
+
+7.  Concluir sobre a decisão tomada no passo 6
+
+## Teste de hipóteses
+
+**Exemplo**
+
+Medimos a altura de 25 bananeiras adultas num SAF. Sabemos que num cultivo convencional, as bananeiras adultas chegam a 3 metros. Considetando um nível de significância de 5%, podemos dizer que, em média, as bananeiras crescem mais no SAF?
+
+altura = \[4.3, 2.6, 4.4, 3.0, 2.7, 2.9, 3.3, 2.7, 4.3, 3.8, 3.1, 2.5, 4.3, 4.2, 4.0, 4.2, 3.3, 3.2, 3.4, 4.5, 3.5, 2.6, 2.5, 2.5, 4.2\]
+
+## Teste de hipóteses
+
+**Exemplo**
+
+1.  As hipóteses que queremos testar são:
+
+H0: µ = 3 contra H1: µ \> 3
+
+2.  Fixamos α = 0.05
+
+3.  A estatística de teste é a t
+
+$$t = \frac{\bar{x} - \mu}{s / \sqrt{n}} \sim t_{n - 1}$$
+
+## Teste de hipóteses
+
+**Exemplo**
+
+4.  A região crítica é do tipo
+
+<center><img src="img/regiao_critica_maior.png" style="width:55%"/></center>
+
+onde t = t(n-1, α) = t(24,0.05) = 1.71 (tabela da distribuição t)
+
+## Teste de hipóteses
+
+**Exemplo**
+
+5.  A partir dos dados amostrais temos que
+
+$$t_c = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{3.44 - 3}{0.72/\sqrt{25}}=3.0731$$
+
+6.  Temos que tc ∈ RC pois 3.0731 \> 1.71, portanto, rejeitamos a hipótese nula
+
+7.  Com base nos dados amostrais, podemos concluir, ao nível de 5% de significância, que a altura média das bananeiras é maior no SAF do que na agricultura convencional
+
+## Teste de hipóteses {.smaller}
+
+**Exemplo**
+
+```{r}
+# amostra
+amostra <- c(4.3, 2.6, 4.4, 3.0, 2.7, 2.9, 3.3, 2.7, 4.3, 3.8, 3.1, 2.5, 4.3, 4.2, 4.0, 4.2, 3.3, 3.2, 3.4, 4.5, 3.5, 2.6, 2.5, 2.5, 4.2)
+
+# media
+xbar <- mean(amostra)
+xbar
+
+# desvio padrao
+s <- sd(amostra)
+s
+
+# numero
+n <- length(amostra)
+
+# regiao critica
+rc <- qt(p = 0.95, df = n - 1)
+rc
+
+# estistica t
+t <- (xbar - 3)/(s/sqrt(n))
+t
+```
+
+## Teste de hipóteses
+
+**Exemplo**
+
+```{r}
+# amostra
+amostra <- c(4.3, 2.6, 4.4, 3.0, 2.7, 2.9, 3.3, 2.7, 4.3, 3.8, 3.1, 2.5, 4.3, 4.2, 4.0, 4.2, 3.3, 3.2, 3.4, 4.5, 3.5, 2.6, 2.5, 2.5, 4.2)
+
+# teste t
+t.test(x = amostra, mu = 3, alternative = "greater")
+```
+
+## Valor de p
+
+Probabilidade de termos obtido aqueles resultados (ou mais extremos), dado que a H0 é verdadeira
+
+<br> P(resultados \| H0 é verdadeira)
+
+::: columns
+::: {.column width="50%"}
+<center><img src="img/distribuicao_t_03.png" style="width:100%"/></center>
+:::
+
+::: {.column width="50%"}
+<br>
+
+<center><img src="img/valor_p.png" style="width:100%"/></center>
+:::
+:::
+
+::: footer
+[As falácias do valor de p](https://fernandafperes.com.br/blog/falacias-valor-de-p/)
+:::
+
+## Valor de p
+
+Probabilidade de termos obtido aqueles resultados (ou mais extremos), dado que a H0 é verdadeira
+
+<br> P(resultados \| H0 é verdadeira)
+
+::: columns
+::: {.column width="50%"}
+<center><img src="img/distribuicao_t_03.png" style="width:100%"/></center>
+:::
+
+::: {.column width="50%"}
+<br>
+
+<center><img src="img/hipotese_valor_p.png" style="width:100%"/></center>
+:::
+:::
+
+::: footer
+[As falácias do valor de p](https://fernandafperes.com.br/blog/falacias-valor-de-p/)
+:::
+
+## Teste t
+
+<br>
+
+<center><img src="img/teste_t_tipos_exemplo.png" style="width:100%"/></center>
+
+::: footer
+[Tutorial: Teste-t para amostras independentes no R](https://fernandafperes.com.br/blog/teste-t-independente/)
+:::
+
+## Teste t para uma amostra
+
+**One sample t test**
+
+<center><img src="img/valor_p_test_t_uma_amostra.png" style="width:65%"/></center>
+
+::: footer
+[Valor de p, nível de significância e testes uni vs. bicaudais](https://fernandafperes.com.br/blog/valor-de-p-calculo/)
+:::
+
+## Teste t para uma amostra
+
+**One sample t test**
+
+```{r}
+## maior
+# amostra
+amostra <- c(4.3, 2.6, 4.4, 3.0, 2.7, 2.9, 3.3, 2.7, 4.3, 3.8, 3.1, 2.5, 4.3, 4.2, 4.0, 4.2, 3.3, 3.2, 3.4, 4.5, 3.5, 2.6, 2.5, 2.5, 4.2)
+
+# teste t
+t.test(x = amostra, mu = 3, alternative = "greater")
+```
+
+## Teste t para uma amostra
+
+**One sample t test**
+
+```{r}
+## menor
+# amostra
+amostra <- c(4.3, 2.6, 4.4, 3.0, 2.7, 2.9, 3.3, 2.7, 4.3, 3.8, 3.1, 2.5, 4.3, 4.2, 4.0, 4.2, 3.3, 3.2, 3.4, 4.5, 3.5, 2.6, 2.5, 2.5, 4.2)
+
+# teste t
+t.test(x = amostra, mu = 3, alternative = "less")
+```
+
+## Teste t para uma amostra
+
+**One sample t test**
+
+```{r}
+## diferente
+# amostra
+amostra <- c(4.3, 2.6, 4.4, 3.0, 2.7, 2.9, 3.3, 2.7, 4.3, 3.8, 3.1, 2.5, 4.3, 4.2, 4.0, 4.2, 3.3, 3.2, 3.4, 4.5, 3.5, 2.6, 2.5, 2.5, 4.2)
+
+# teste t
+t.test(x = amostra, mu = 3, alternative = "two.sided")
+```
+
+## Teste t
+
+<br>
+
+<center><img src="img/teste_t_tipos_exemplo.png" style="width:100%"/></center>
+
+::: footer
+[Tutorial: Teste-t para amostras independentes no R](https://fernandafperes.com.br/blog/teste-t-independente/)
+:::
+
+## *Physalaemus nattereri*
+
+**Comprimento rostro-cloacal (CRC)**
+
+::: columns
+::: {.column width="50%"}
+<center><img src="img/pn.png" style="width:75%"/></center>
+:::
+
+::: {.column width="50%"}
+<br><br>
+
+<center><img src="img/crc.png" style="width:100%"/></center>
+:::
+:::
+
+::: footer
+[herpto.org](https://herpeto.org/anuro/physalaemus-nattereri/)
+:::
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r echo=FALSE, }
+library(tidyverse)
+library(ecodados)
+teste_t_var_igual %>% 
+    dplyr::group_by(Estacao) %>% 
+    dplyr::summarise(mean = round(mean(CRC), 2), sd = round(sd(CRC), 2)) %>% 
+    knitr::kable()
+```
+
+```{r echo=FALSE, fig.align='center'}
+ggplot(data = teste_t_var_igual, aes(x = CRC, fill = Estacao)) +
+    geom_density(alpha = .5) +
+    geom_vline(xintercept = 3.26, color = "cyan4", linewidth = 2, linetype = 1) +
+    geom_vline(xintercept = 3.70, color = "darkorange", linewidth = 2, linetype = 1) +
+    scale_fill_manual(values = c("darkorange", "cyan4")) +
+    labs(x = "Comprimento rostro-cloacal (CRC) (mm)", y = "Densidade", fill = "Estação") +
+    theme_minimal(base_size = 25) +
+    theme(legend.position = c(.9, .8))
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Teste de normalidade dos residuos - H0: é normal
+residuos <- residuals(lm(CRC ~ Estacao, data = teste_t_var_igual))
+shapiro.test(residuos)
+```
+
+```{r echo=FALSE, fig.align='center'}
+ggplot(data = data.frame(x = residuos), aes(x = x)) +
+    geom_density(fill = "gray") +
+    theme_void()
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Teste de homogeneidade de variancia - H0: tem homogeneidade
+car::leveneTest(CRC ~ as.factor(Estacao), data = teste_t_var_igual)
+```
+
+<center><img src="img/levene_test.png" style="width:40%"/></center>
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Análise Teste T 
+t.test(CRC ~ Estacao, data = teste_t_var_igual, var.equal = TRUE)
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r echo=FALSE, fig.align='center'}
+## Grafico
+ggplot(data = teste_t_var_igual, aes(x = Estacao, y = CRC, color = Estacao)) + 
+    labs(x = "Estações", y = expression(paste("CRC (mm) - ", italic("P. nattereri")))) +
+    geom_boxplot(fill = c("darkorange", "cyan4"), color = "black", 
+                 outlier.shape = NA) +
+    geom_jitter(shape = 16, position = position_jitter(0.1), 
+                cex = 5, alpha = 0.7) +
+    scale_color_manual(values = c("black", "black")) +
+    theme_bw(base_size = 15) +
+    theme(legend.position = "none",
+          legend.text = element_text(face = "bold"))
+```
+
+## *Leptodactylus podicipinus*
+
+**Comprimento rostro-cloacal (CRC)**
+
+::: columns
+::: {.column width="50%"}
+<br><br>
+
+<center><img src="img/lp.jpg" style="width:100%"/></center>
+:::
+
+::: {.column width="50%"}
+<br><br>
+
+<center><img src="img/crc.png" style="width:100%"/></center>
+:::
+:::
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r echo=FALSE, }
+teste_t_var_diferente %>% 
+    dplyr::group_by(Estacao) %>% 
+    dplyr::summarise(mean = round(mean(CRC), 2), sd = round(sd(CRC), 2)) %>% 
+    knitr::kable()
+```
+
+```{r echo=FALSE, fig.align='center'}
+ggplot(data = teste_t_var_diferente, aes(x = CRC, fill = Estacao)) +
+    geom_density(alpha = .5) +
+    geom_vline(xintercept = 3.26, color = "cyan4", linewidth = 2, linetype = 1) +
+    geom_vline(xintercept = 3.70, color = "darkorange", linewidth = 2, linetype = 1) +
+    scale_fill_manual(values = c("darkorange", "cyan4")) +
+    labs(y = "Densidade", fill = "Estação") +
+    theme_minimal(base_size = 25) +
+    theme(legend.position = c(.2, .8))
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Teste de normalidade dos residuos - H0: é normal
+residuos <- residuals(lm(CRC ~ Estacao, data = teste_t_var_diferente))
+shapiro.test(residuos)
+```
+
+```{r echo=FALSE, fig.align='center'}
+library(ggplot2)
+ggplot(data = data.frame(x = residuos), aes(x = x)) +
+    geom_density(fill = "gray") +
+    theme_void()
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Teste de homogeneidade de variancia - H0: tem homogeneidade
+car::leveneTest(CRC ~ as.factor(Estacao), data = teste_t_var_diferente)
+```
+
+<center><img src="img/levene_test.png" style="width:35%"/></center>
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Análise Teste T 
+t.test(CRC ~ Estacao, data = teste_t_var_diferente, var.equal = TRUE)
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r}
+## Análise Teste T 
+t.test(CRC ~ Estacao, data = teste_t_var_diferente, var.equal = FALSE)
+```
+
+## Teste t para duas amostras indep.
+
+**Independent-samples t test**
+
+```{r echo=FALSE, fig.align='center'}
+## Grafico
+ggplot(data = teste_t_var_diferente, aes(x = Estacao, y = CRC, color = Estacao)) + 
+    labs(x = "Estações", 
+         y = expression(paste("CRC (mm) - ", italic("L. podicipinus")))) +
+    geom_boxplot(fill = c("darkorange", "cyan4"), color = "black", 
+                 outlier.shape = NA) +
+    geom_jitter(shape = 16, position = position_jitter(0.1), 
+                cex = 5, alpha = 0.7) +
+    scale_color_manual(values = c("black", "black")) +
+    theme_bw(base_size = 15) +
+    theme(legend.position = "none",
+          legend.text = element_text(face = "bold"))
+```
+
+## Teste t para duas amostras indep.
+
+**Conclusão**
+
+-   Os machos de *P. nattereri* coletados na estação chuvosa foram em média 0,43 mm maiores do que os machos coletados na estação seca (t49 = 4,15, P \< 0,001)
+
+-   As fêmeas de *L. podicipinus* coletadas na estação chuvosa não são maiores do que as fêmeas coletadas na estação seca, apesar de possuírem maior variância, o que pode ser biologicamente interessante
+
+## Teste t
+
+<br>
+
+<center><img src="img/teste_t_tipos_exemplo.png" style="width:100%"/></center>
+
+::: footer
+[Tutorial: Teste-t para amostras independentes no R](https://fernandafperes.com.br/blog/teste-t-independente/)
+:::
+
+## Área queimada
+
+**Número de espécies de artrópodes**
+
+::: columns
+::: {.column width="50%"}
+<br>
+
+<center><img src="img/artropodes.png" style="width:100%"/></center>
+:::
+
+::: {.column width="50%"}
+<br> ![](img/queimada.png){.absolute width="600" height="400"}
+:::
+:::
+
+## Teste t para duas amostras pareadas
+
+**Paired-samples t test**
+
+```{r echo=FALSE, }
+teste_t_pareado %>% 
+    dplyr::mutate(Estado = forcats::fct_relevel(Estado, "Pre-Queimada", "Pos-Queimada")) %>% 
+    dplyr::group_by(Estado) %>% 
+    dplyr::summarise(mean = round(mean(Riqueza), 2), sd = round(sd(Riqueza), 2)) %>% 
+    knitr::kable()
+```
+
+```{r echo=FALSE, fig.align='center'}
+teste_t_pareado %>% 
+    dplyr::mutate(Estado = forcats::fct_relevel(Estado, "Pre-Queimada", "Pos-Queimada")) %>% 
+    ggplot(aes(x = Riqueza, fill = Estado)) +
+    geom_density(alpha = .5) +
+    geom_vline(xintercept = 74.26, color = "cyan4", linewidth = 2, linetype = 1) +
+    geom_vline(xintercept = 29.7, color = "darkorange", linewidth = 2, linetype = 1) +
+    scale_fill_manual(values = c("cyan4", "darkorange")) +
+    labs(y = "Densidade", fill = "Estado") +
+    theme_minimal(base_size = 25) +
+    theme(legend.position = c(.8, .8))
+```
+
+## Teste t para duas amostras indep.
+
+**Paired-samples t test**
+
+```{r}
+## Teste de normalidade dos residuos - H0: é normal
+residuos <- residuals(lm(Riqueza ~ Estado, data = teste_t_pareado))
+shapiro.test(residuos)
+```
+
+```{r echo=FALSE, fig.align='center'}
+ggplot(data = data.frame(x = residuos), aes(x = x)) +
+    geom_density(fill = "gray") +
+    theme_void()
+```
+
+## Teste t para duas amostras indep.
+
+**Paired-samples t test**
+
+```{r}
+## Teste de homogeneidade de variancia - H0: tem homogeneidade
+car::leveneTest(Riqueza ~ as.factor(Estado), data = teste_t_pareado)
+```
+
+<center><img src="img/levene_test.png" style="width:35%"/></center>
+
+## Teste t para duas amostras indep.
+
+**Paired-samples t test**
+
+```{r}
+## Análise Teste T Pareado
+t.test(Riqueza ~ Estado, paired = TRUE, data = teste_t_pareado)
+```
+
+## Teste t para duas amostras indep.
+
+**Paired-samples t test**
+
+```{r echo=FALSE, fig.align='center'}
+library(ggpubr)
+## Gráfico
+ggpaired(teste_t_pareado, x = "Estado", y = "Riqueza",
+         color = "Estado", line.color = "gray", line.size = 0.8, 
+         palette = c("cyan4", "darkorange"), width = 0.5, 
+         point.size = 4, xlab = "Estado das localidades", 
+         ylab = "Riqueza de Espécies") +
+    expand_limits(y = c(0, 150)) +
+    theme_bw(base_size = 15) +
+    theme(legend.position = "none")
+```
+
+## Teste t para duas amostras indep.
+
+**Conclusão**
+
+Os resultados mostram que as localidades após as queimadas apresentam em média 44,5 espécies de artrópodes a menos do que antes das queimadas
+
+# Dúvidas?
+
+# Resumindo
+
+## Resumindo {.smaller}
+
+-   Linguagem R
+
+-   Análise Exploratória de Dados (AED): medidas-resumo, tabelas e gráficos
+
+-   Análise de dados univariados
+
+-   Pergunta e hipótese
+
+-   Hipótese ecológica e hipótese estatística
+
+-   População e amostra
+
+-   Parâmetro e estatística (estimador)
+
+-   Média, variância, desvio padrão, erro padrão
+
+-   Inferência estatística: intervalo de confiança e teste de hipóteses
+
+-   Distribuição z e t e valor de p
+
+-   Teste t para uma amostra
+
+-   Teste t para duas amostras indep.
+
+-   Teste t para duas amostras pareadas
+
+# Material de estudo
+
+## Material de estudo
+
+-   [Análises Ecológicas no R (2022)](https://analises-ecologicas.com/)
+
+-   [Princípios de Estatística em Ecologia (2010)](https://loja.grupoa.com.br/principios-de-estatistica-em-ecologia9788536324326-p991743)
+
+-   [Estatística Básica (2017)](https://www.editoradodireito.com.br/estatistica-basica---9%C2%AA-edicao/p?idsku=623727&gclid=Cj0KCQjw0tKiBhC6ARIsAAOXutngvT3QO0PKWquwx4ij8tQIKgB6QPcZgLyPMUoS_9YSTJ5_V3Fz3X4aAnUnEALw_wcB#)
+
+-   [Estatística e Ciência de Dados (2022)](https://www.ime.usp.br/~pam/cdadosf3.pdf)
+
+-   [Analysing Ecological Data (2007)](https://link.springer.com/book/10.1007/978-0-387-45972-1)
+
+- [Ecological Statistics: Contemporary theory and application (2015)](https://academic.oup.com/book/41052)
+
+-   [Fernanda Peres](https://fernandafperes.com.br/)
+
+## Muito obrigado!
+
+::: columns
+::: {.column width="50%"}
+Agradecimentos:
+
+-   [Fernanda Peres](https://fernandafperes.com.br/)
+-   [Prof. Tadeu Siqueira](https://tsiqueiralab.weebly.com/)
+-   [Prof. Miltinho](https://leec.eco.br/)
+-   [Fapesp #2022/01899-6](https://bv.fapesp.br/pt/bolsas/203713/estrutura-da-paisagem-como-preditor-da-diversidade-taxonomica-e-funcional-de-anfibios-na-mata-atlant/)
+
+<center><img src="img/fapesp.png" style="width:70%"/></center>
+:::
+
+::: {.column width="50%"}
+Contato:
+
+<center>
+
+[`r icons::icon_style(icons::fontawesome("link"), fill = "#2268bc")`](https://mauriciovancine.github.io/) [`r icons::icon_style(icons::fontawesome("envelope", style = "solid"), fill = "#2268bc")`](mailto:mauricio.vancine@gmail.com) [`r icons::icon_style(icons::fontawesome("twitter"), fill = "#2268bc")`](https://twitter.com/mauriciovancine) [`r icons::icon_style(icons::fontawesome("github"), fill = "#2268bc")`](https://github.com/mauriciovancine)
+
+<img src="img/gif_frogs.gif" style="width:80%"/>
+
+</center>
+:::
+:::
+
+::: footer
+Slides por [Maurício Vancine](https://mauriciovancine.github.io/), feitos com [Quarto](https://quarto.org/). Código disponível no [GitHub](https://github.com/mauriciovancine/workshop-r-introduction/blob/master/01_slides/slides.qmd).
+:::
